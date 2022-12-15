@@ -1,0 +1,58 @@
+#include<iostream>
+#include<vector>
+#include<list>
+using namespace std;
+int age[2000005];
+int main(){
+	int n;
+	
+	while(1){
+		cin>>n;
+		if(n==0)break;
+		list<int> radix1[10];
+		
+		for(int i=0;i<n;i++){
+			cin>>age[i];
+			radix1[age[i]%10].push_back(age[i]);
+		}
+		list<int> radix2[10];
+
+		for(int i=0;i<10;i++){
+			int a;
+			while(radix1[i].empty()==0){
+				a=radix1[i].front();
+				radix2[(a/10)%10].push_back(a);
+				radix1[i].pop_front();
+			}
+		}
+		
+		list<int> radix3[10];
+
+		for(int i=0;i<10;i++){
+			int a;
+			while(radix2[i].empty()==0){
+				a=radix2[i].front();
+				radix3[(a/10)%10].push_back(a);
+				radix2[i].pop_front();
+			}
+		}
+		
+		cout<<radix3[0].front();
+		radix3[0].pop_front();
+		for(int i=0;i<10;i++){
+			while(radix3[i].empty()==0){
+				
+				cout<<" "<<radix3[i].front();
+				radix3[i].pop_front();
+			}
+		}
+		
+		
+//		for(int i=0;i<n;i++){
+//			cout<<age[i]<<" ";
+//		}
+		cout<<endl;
+		
+	}
+	return 0;
+} 
