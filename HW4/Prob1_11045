@@ -1,0 +1,48 @@
+#include<iostream>
+#include<map>
+#include<string>
+using namespace std;
+int vol[35][2];
+int last[6];
+map<string,int> _size;
+void set_size(){
+	_size["XS"]=0;
+	_size["S"]=1;
+	_size["M"]=2;
+	_size["L"]=3;
+	_size["XL"]=4;
+	_size["XXL"]=5;
+	return;
+}
+bool dfs(int a,int m){
+	if(a==m)return true;
+
+	
+	for(int i=0;i<2;i++){
+		if(last[vol[a][i]]==0)continue;
+		last[vol[a][i]]--;
+		if(dfs(a+1,m)==true) return true;
+		
+		last[vol[a][i]]++;
+	}
+	return false;
+}
+int main(){
+	set_size();
+	int c,N,M;
+	string str1,str2;
+	cin>>c;
+	while(c--){
+		cin>>N>>M;
+		for(int i=0;i<M;i++){
+			cin>>str1>>str2;
+			vol[i][0]=_size[str1];
+			vol[i][1]=_size[str2];
+		}
+		for(int i=0;i<6;i++){
+			last[i]=N/6;
+		}
+		if(dfs(0,M))cout<<"YES\n";
+		else cout<<"NO\n";
+	}
+}
