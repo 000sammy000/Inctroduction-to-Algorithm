@@ -1,0 +1,59 @@
+#include<iostream>
+#include<cmath>
+#include<iomanip>
+using namespace std;
+double func(double p,double q,double r,double s,double t,double u,double x){
+	
+	return p*exp(-x)+q*sin(x)+r*cos(x)+s*tan(x)+t*x*x+u;
+	
+}
+
+int main(){
+	
+	double y;
+	double p,q,r,s,t,u;
+	double x;
+	double left,right,l,ri,m;
+	
+	while(cin>>p>>q>>r>>s>>t>>u){
+		left=0;right=1;
+		if(func(p,q,r,s,t,u,0)==0){
+			cout<<fixed<<setprecision(4)<<0.0000<<endl;
+			continue;
+		}else if(func(p,q,r,s,t,u,1)==0){
+			cout<<fixed<<setprecision(4)<<1.0000<<endl;
+			continue;
+		}
+		
+		while(1){
+			l=func(p,q,r,s,t,u,left);
+			ri=func(p,q,r,s,t,u,right);
+			m=func(p,q,r,s,t,u,(left+right)/2);
+
+			if(m==0){
+				cout<<fixed<<setprecision(4)<<(left+right)/2<<endl;
+				break;
+			}
+			if(l*ri>0){
+				cout<<"No solution"<<endl;
+				break;
+			}
+			if(l*m<0){
+				right=(left+right)/2;
+			}
+			else if(m*ri<0){
+				left=(left+right)/2;
+			}
+			int ll=(left-0.00005)*10000,rr=(right-0.00005)*10000;
+			if(ll==rr){
+				cout<<fixed<<setprecision(4)<<right<<endl;
+				break;
+			}
+			
+		}
+			
+	}
+	
+	
+	return 0;
+} 
