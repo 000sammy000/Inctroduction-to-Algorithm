@@ -1,0 +1,55 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int len;
+int dp[1005],before[1005];
+struct elephant{
+	int w,s,order;
+}e[1005];
+bool cmp(const elephant &a,const elephant &b){
+	if(a.w==b.w)return a.order<b.order;
+	else return a.w<b.w;
+}
+void print(int id,int total){
+	if(total==1){
+		cout<<e[id].order<<endl;
+	}
+	else{
+		print(before[id],total-1);
+		cout<<e[id].order<<endl;
+	}
+	
+}
+int main(){
+	int i=0,x,y;
+	while(cin>>x>>y){
+//		if(x=='s')break;
+		e[i].w=x;
+		e[i].s=y;
+		e[i].order=i+1;
+		i++;
+	}
+	len=i;
+	sort(e,e+len,cmp);
+	int max=0,max_id=0;
+	for(i=0;i<len;i++){
+		dp[i]=1;
+		before[i]=i;
+		for(int j=0;j<i;j++){
+			if(e[i].w>e[j].w&&e[i].s<e[j].s&&dp[i]<dp[j]+1){
+				dp[i]=dp[j]+1;
+				before[i]=j;
+			}
+		}
+		if(dp[i]>max){
+			max=dp[i];
+			max_id=i;
+		}
+	}
+	
+	cout<<dp[max_id]<<endl;
+	print(max_id,max);
+	
+	
+	return 0;
+}
